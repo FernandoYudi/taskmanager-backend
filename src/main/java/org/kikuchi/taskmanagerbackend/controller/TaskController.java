@@ -1,6 +1,9 @@
 package org.kikuchi.taskmanagerbackend.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.kikuchi.taskmanagerbackend.dto.TaskRequestDTO;
+import org.kikuchi.taskmanagerbackend.dto.TaskResponseDTO;
 import org.kikuchi.taskmanagerbackend.service.TaskService;
 import org.kikuchi.taskmanagerbackend.model.Task;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +17,12 @@ public class TaskController {
     private final TaskService taskService;
 
     @PostMapping
-    public Task createTask(@RequestBody Task task){
-        return taskService.createTask(task);
+    public TaskResponseDTO createTask(@Valid @RequestBody TaskRequestDTO dto){
+        return taskService.createTask(dto);
     }
 
     @GetMapping("/{id}")
-    public Task getTask(@PathVariable Long id){
+    public TaskResponseDTO getTask(@PathVariable Long id){
         return taskService.getTaskId(id);
     }
 
@@ -29,8 +32,8 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public Task updateTask(@PathVariable Long id, @RequestBody Task task){
-        return taskService.updateTask(id, task);
+    public TaskResponseDTO updateTask(@Valid @PathVariable Long id, @RequestBody TaskRequestDTO dto){
+        return taskService.updateTask(id, dto);
     }
 
     @GetMapping

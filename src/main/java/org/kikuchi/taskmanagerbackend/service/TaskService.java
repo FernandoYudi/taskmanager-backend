@@ -1,10 +1,11 @@
 package org.kikuchi.taskmanagerbackend.service;
 
 import lombok.RequiredArgsConstructor;
+import org.kikuchi.taskmanagerbackend.dto.TaskRequestDTO;
+import org.kikuchi.taskmanagerbackend.dto.TaskResponseDTO;
 import org.kikuchi.taskmanagerbackend.model.Task;
 import org.kikuchi.taskmanagerbackend.repository.TaskRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,29 +15,58 @@ import java.util.List;
 public class TaskService {
     private final TaskRepository taskRepository;
 
-    public Task createTask(Task task){
+    public TaskResponseDTO createTask(TaskRequestDTO dto){
+        Task task = new Task();
+
+        task.setTitle(dto.getTitle());
+        task.setDescription(dto.getDescription());
+        task.setStatus(dto.getStatus());
+
         task.setCreatedAt(LocalDateTime.now());
-        return taskRepository.save(task);
+        Task savedTask = taskRepository.save(task);
+
+        return new TaskResponseDTO(
+                savedTask.getId(),
+                savedTask.getTitle(),
+                savedTask.getDescription(),
+                savedTask.getStatus(),
+                savedTask.getCreatedAt()
+        );
     }
 
-    public Task getTaskId(Long id){
-        return taskRepository.findById(id)
+    public TaskResponseDTO getTaskId(Long id){
+        Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Task not Found"));
+        return new TaskResponseDTO(
+                task.getId(),
+                task.getTitle(),
+                task.getDescription(),
+                task.getStatus(),
+                task.getCreatedAt()
+        );
     }
 
     public void deleteTask(Long id){
         taskRepository.deleteById(id);
     }
 
-    public Task updateTask(Long id,Task newTask){
+    public TaskResponseDTO updateTask(Long id, TaskRequestDTO dto){
         Task existingTask = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Task not found"));
 
-        existingTask.setTitle(newTask.getTitle());
-        existingTask.setDescription(newTask.getDescription());
-        existingTask.setStatus(newTask.getStatus());
+        existingTask.setTitle(dto.getTitle());
+        existingTask.setDescription(dto.getDescription());
+        existingTask.setStatus(dto.getStatus());
 
-        return taskRepository.save(existingTask);
+        Task savedTask = taskRepository.save(existingTask);
+
+        return new TaskResponseDTO(
+                savedTask.getId(),
+                savedTask.getTitle(),
+                savedTask.getDescription(),
+                savedTask.getStatus(),
+                savedTask.getCreatedAt()
+        );
     }
 
     public List<Task> getAllTasks(){
