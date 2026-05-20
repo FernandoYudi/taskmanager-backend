@@ -3,6 +3,7 @@ package org.kikuchi.taskmanagerbackend.service;
 import lombok.RequiredArgsConstructor;
 import org.kikuchi.taskmanagerbackend.dto.TaskRequestDTO;
 import org.kikuchi.taskmanagerbackend.dto.TaskResponseDTO;
+import org.kikuchi.taskmanagerbackend.exception.TaskNotFoundException;
 import org.kikuchi.taskmanagerbackend.model.Task;
 import org.kikuchi.taskmanagerbackend.repository.TaskRepository;
 import org.springframework.stereotype.Service;
@@ -52,7 +53,7 @@ public class TaskService {
 
     public TaskResponseDTO updateTask(Long id, TaskRequestDTO dto){
         Task existingTask = taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> new TaskNotFoundException("Task not found"));
 
         existingTask.setTitle(dto.getTitle());
         existingTask.setDescription(dto.getDescription());
