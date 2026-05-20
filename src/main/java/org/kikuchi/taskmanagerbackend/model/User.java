@@ -1,6 +1,6 @@
 package org.kikuchi.taskmanagerbackend.model;
 
-import org.kikuchi.taskmanagerbackend.enums.TaskStatus;
+import org.kikuchi.taskmanagerbackend.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,18 +8,19 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "tasks")
+@Table(name = "users")
 @Getter
 @Setter
-public class Task {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Long id;
-    private String title;
-    private String description;
+    private String name;
+    private String email;
+    private String password;
 
     @Enumerated(EnumType.STRING)
-    private TaskStatus status;
+    private UserRole role;
     private LocalDateTime createdAt;
 }

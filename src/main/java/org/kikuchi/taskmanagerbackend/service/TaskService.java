@@ -1,8 +1,8 @@
 package org.kikuchi.taskmanagerbackend.service;
 
 import lombok.RequiredArgsConstructor;
-import org.kikuchi.taskmanagerbackend.dto.TaskRequestDTO;
-import org.kikuchi.taskmanagerbackend.dto.TaskResponseDTO;
+import org.kikuchi.taskmanagerbackend.dto.Tasks.TaskRequestDTO;
+import org.kikuchi.taskmanagerbackend.dto.Tasks.TaskResponseDTO;
 import org.kikuchi.taskmanagerbackend.exception.TaskNotFoundException;
 import org.kikuchi.taskmanagerbackend.model.Task;
 import org.kikuchi.taskmanagerbackend.repository.TaskRepository;
@@ -37,7 +37,7 @@ public class TaskService {
 
     public TaskResponseDTO getTaskId(Long id){
         Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not Found"));
+                .orElseThrow(() -> new TaskNotFoundException("Task not Found"));
         return new TaskResponseDTO(
                 task.getId(),
                 task.getTitle(),

@@ -1,4 +1,4 @@
-package org.kikuchi.taskmanagerbackend.dto;
+package org.kikuchi.taskmanagerbackend.dto.Tasks;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
