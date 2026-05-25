@@ -53,4 +53,32 @@ public class UserService {
                 user.getCreatedAt()
         );
     }
+
+    public List<User> getAllUsers(){
+        return userRepository.findAll();
+    }
+
+    public UserResponseDTO updateUser(Long id, UserRequestDTO dto){
+        User existingUser = userRepository.findById(id).orElseThrow(
+                () -> new UserNotFoundException("Usuário não encontrado"));
+
+        existingUser.setName(dto.getName());
+        existingUser.setEmail(dto.getEmail());
+        existingUser.setPassword(dto.getPassword());
+
+        User savedUser = userRepository.save(existingUser);
+
+        return new UserResponseDTO(
+                savedUser.getId(),
+                savedUser.getName(),
+                savedUser.getEmail(),
+                savedUser.getPassword(),
+                savedUser.getRole(),
+                savedUser.getCreatedAt()
+        );
+    }
+
+    public void deleteUser(Long id){
+        userRepository.deleteById(id);
+    }
 }

@@ -26,9 +26,9 @@ public class TaskController {
         return taskService.getTaskId(id);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteTask(@PathVariable Long id){
-         taskService.deleteTask(id);
+    @GetMapping
+    public List<Task> getAllTasks(){
+        return taskService.getAllTasks();
     }
 
     @PutMapping("/{id}")
@@ -36,8 +36,12 @@ public class TaskController {
         return taskService.updateTask(id, dto);
     }
 
-    @GetMapping
-    public List<Task> getAllTasks(){
-        return taskService.getAllTasks();
+    @DeleteMapping("/{id}")
+    public void deleteTask(@PathVariable Long id){
+         taskService.deleteTask(id);
     }
+
+
+
+
 }

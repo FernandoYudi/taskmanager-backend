@@ -47,8 +47,8 @@ public class TaskService {
         );
     }
 
-    public void deleteTask(Long id){
-        taskRepository.deleteById(id);
+    public List<Task> getAllTasks(){
+        return taskRepository.findAll();
     }
 
     public TaskResponseDTO updateTask(Long id, TaskRequestDTO dto){
@@ -70,7 +70,9 @@ public class TaskService {
         );
     }
 
-    public List<Task> getAllTasks(){
-        return taskRepository.findAll();
+    public void deleteTask(Long id){
+        taskRepository.deleteById(id);
     }
+
+
 }
