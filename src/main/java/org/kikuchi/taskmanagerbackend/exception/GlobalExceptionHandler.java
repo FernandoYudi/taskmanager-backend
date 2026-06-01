@@ -23,6 +23,17 @@ public class GlobalExceptionHandler {
                 ));
     }
 
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleUserNotFound(
+            UserNotFoundException ex) {
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Map.of(
+                        "message", ex.getMessage(),
+                        "status", 404
+                ));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
         public ResponseEntity<Map<String, String>> handleValidationErrors(MethodArgumentNotValidException ex){
 
@@ -33,5 +44,16 @@ public class GlobalExceptionHandler {
         );
 
         return ResponseEntity.badRequest().body(errors);
+    }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<Map<String, Object>> handleInvalidCredentials(
+            InvalidCredentialsException ex) {
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of(
+                        "message", ex.getMessage(),
+                        "status", 401
+                ));
     }
 }

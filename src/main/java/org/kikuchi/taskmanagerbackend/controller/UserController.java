@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.kikuchi.taskmanagerbackend.dto.Users.UserRequestDTO;
 import org.kikuchi.taskmanagerbackend.dto.Users.UserResponseDTO;
 import org.kikuchi.taskmanagerbackend.service.UserService;
-import org.kikuchi.taskmanagerbackend.model.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,7 +27,7 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAllUsers(){
+    public List<UserResponseDTO> getAllUsers(){
         return userService.getAllUsers();
     }
 
